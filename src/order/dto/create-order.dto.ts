@@ -1,20 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
-  IsNumber,
   IsString,
   IsUUID,
+  Length,
   MaxLength,
 } from 'class-validator';
 
 export class CreateOrderDto {
-  @IsUUID()
-  @MaxLength(50)
+  // @IsUUID()
+  // @Length(300)
   id?: string;
 
   @IsNotEmpty()
   @IsString()
-  @MaxLength(50)
+  @MaxLength(100)
   @ApiProperty({
     description: 'Product of Order',
     example: 'Soccer Cleats',
@@ -23,7 +23,7 @@ export class CreateOrderDto {
 
   @IsNotEmpty()
   @IsString()
-  @MaxLength(50)
+  @MaxLength(100)
   @ApiProperty({
     description: 'Description of categories of soccer cleats',
     example: 'IC',
@@ -39,7 +39,7 @@ export class CreateOrderDto {
   status: string = 'Active' || 'Inactive';
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   @ApiProperty({
     description: 'Quantity of products',
     example: '2',

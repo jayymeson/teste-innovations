@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { handleErrorConstraintUnique } from 'src/utils/handle.constraint.unique';
+import {
+  handleErrorConstraintUnique,
+  handleErrorStatus,
+} from 'src/utils/handle.constraint.unique';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
@@ -27,6 +30,11 @@ export class OrderService {
       status: createOrderDto.status,
       quantity: createOrderDto.quantity,
     };
+
+    if (data.status !== 'Active' && 'Inactive') {
+      return handleErrorStatus(new Error());
+    }
+
     return await this.prisma.orders
       .create({ select: this.OrderSelect, data })
       .catch(handleErrorConstraintUnique);
