@@ -4,17 +4,17 @@ import {
   IsNumber,
   IsString,
   IsUUID,
-  Length,
+  MaxLength,
 } from 'class-validator';
 
 export class CreateOrderDto {
   @IsUUID()
-  @Length(50)
-  id: string;
+  @MaxLength(50)
+  id?: string;
 
   @IsNotEmpty()
   @IsString()
-  @Length(50)
+  @MaxLength(50)
   @ApiProperty({
     description: 'Product of Order',
     example: 'Soccer Cleats',
@@ -23,7 +23,7 @@ export class CreateOrderDto {
 
   @IsNotEmpty()
   @IsString()
-  @Length(50)
+  @MaxLength(50)
   @ApiProperty({
     description: 'Description of categories of soccer cleats',
     example: 'IC',
@@ -42,7 +42,7 @@ export class CreateOrderDto {
   @IsNumber()
   @ApiProperty({
     description: 'Quantity of products',
-    example: 2,
+    example: '2',
   })
-  quantity: number;
+  quantity: string;
 }

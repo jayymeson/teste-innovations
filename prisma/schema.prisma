@@ -12,11 +12,11 @@ datasource db {
 
 model orders {
   id String @id @default(uuid())
-  name String
-  category String
-  status String
-  quantity Int
-  
+  name String @unique
+  category String @unique
+  status String @unique
+  quantity String 
+
   createdAt DateTime @default(now()) @map("created_at")
   updateAt DateTime @updatedAt @map("update_at")
   deletedAt DateTime @default(now()) @map("deleted_at")

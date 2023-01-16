@@ -1,5 +1,5 @@
 export class Order {
-  id: string;
+  id?: string;
   name: string;
   category: string;
   status: string;
