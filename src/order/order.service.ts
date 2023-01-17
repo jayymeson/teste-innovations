@@ -23,7 +23,7 @@ export class OrderService {
 
   constructor(private prisma: PrismaService) {}
 
-  async create(createOrderDto: CreateOrderDto) {
+  async create(createOrderDto: CreateOrderDto): Promise<Order> {
     const data: CreateOrderDto = {
       name: createOrderDto.name,
       category: createOrderDto.category,
@@ -40,8 +40,8 @@ export class OrderService {
       .catch(handleErrorConstraintUnique);
   }
 
-  findAll() {
-    return this.prisma.orders.findMany();
+  async findAll(): Promise<Order[]> {
+    return this.prisma.findAll();
   }
 
   async verifyingTheOrder(id: string): Promise<Order> {
@@ -57,11 +57,14 @@ export class OrderService {
     return order;
   }
 
-  findOne(id: string) {
+  findOne(id: string): Promise<Order> {
     return this.verifyingTheOrder(id);
   }
 
-  async update(id: string, updateOrderDto: UpdateOrderDto) {
+  async update(
+    id: string,
+    updateOrderDto: UpdateOrderDto,
+  ): Promise<Order | void> {
     await this.verifyingTheOrder(id);
 
     return this.prisma.orders
@@ -75,9 +78,11 @@ export class OrderService {
 
   async remove(id: string) {
     await this.verifyingTheOrder(id);
-    return this.prisma.orders.delete({
+    return this.prisma.orders.update({
       where: { id: id },
-      select: this.OrderSelect,
+      data: {
+        deletedAt: new Date(),
+      },
     });
   }
 }
