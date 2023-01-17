@@ -5,10 +5,11 @@ import axios from 'axios';
 export class IbgeService {
   async findAll() {
     const response = await axios.get(
-      `https://servicodados.ibge.gov.br/api/v1/localidades/estados/ce/distritos`,
+      `https://servicodados.ibge.gov.br/api/v1/localidades/estados/33/municipios`,
     );
 
-    return response;
+    console.log(response);
+    return JSON.stringify(response);
   }
 
   async findOne(uf: string) {
